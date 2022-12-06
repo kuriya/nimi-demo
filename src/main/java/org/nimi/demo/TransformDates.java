@@ -16,8 +16,12 @@ public class TransformDates {
 
     private static final String OUTPUT_FILE_NAME_PREFIX="\\output";
     public static void transformDates(final File file, final String sourcePattern, final String destinationPattern) {
+        /**
+         * Input and output format
+         */
         final SimpleDateFormat inputFormat = getSimpleDateFormat(sourcePattern);
         final SimpleDateFormat outputFormat = getSimpleDateFormat(destinationPattern);
+
         Scanner scanner = null;
         try {
             scanner = new Scanner(file);
@@ -40,7 +44,7 @@ public class TransformDates {
         }
         FileWriter writer = null;
         try {
-            String outputFilepath = file.getParent() + OUTPUT_FILE_NAME_PREFIX + file.getName();
+            String outputFilepath = file.getParent().concat(OUTPUT_FILE_NAME_PREFIX).concat(file.getName());
             outputFilepath = outputFilepath.replace("\\", "/");
             writer = new FileWriter(outputFilepath);
         } catch (IOException e) {
