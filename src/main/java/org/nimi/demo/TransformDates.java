@@ -19,8 +19,8 @@ public class TransformDates {
         /**
          * Input and output format
          */
-        final SimpleDateFormat inputFormat = getSimpleDateFormat(sourcePattern);
-        final SimpleDateFormat outputFormat = getSimpleDateFormat(destinationPattern);
+        final SimpleDateFormat inputFormat = new SimpleDateFormat(sourcePattern);
+        final SimpleDateFormat outputFormat = new SimpleDateFormat(destinationPattern);
 
         Scanner scanner = null;
         try {
@@ -44,8 +44,12 @@ public class TransformDates {
         }
         FileWriter writer = null;
         try {
-            String outputFilepath = file.getParent().concat(OUTPUT_FILE_NAME_PREFIX).concat(file.getName());
-            outputFilepath = outputFilepath.replace("\\", "/");
+            final StringBuilder outputFilePathBuilder = new StringBuilder();
+            outputFilePathBuilder.append(file.getParent());
+            outputFilePathBuilder.append(OUTPUT_FILE_NAME_PREFIX);
+            outputFilePathBuilder.append(file.getName());
+
+            final String outputFilepath = outputFilePathBuilder.toString().replace("\\", "/");
             writer = new FileWriter(outputFilepath);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -62,7 +66,4 @@ public class TransformDates {
         }
     }
 
-    private static SimpleDateFormat getSimpleDateFormat(String dateFormat) {
-        return new SimpleDateFormat(dateFormat);
-    }
 }
